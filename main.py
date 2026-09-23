@@ -18,13 +18,13 @@ df = pd.read_csv("A.csv")
 target = pd.read_csv("A_targets.csv")
 
 # gabungkan target
-df["Placement_Status"] = target.iloc[:, 0]
-df["Salary"] = target.iloc[:, 1]
+df = df.merge(target, on="Student_ID")
+df = df.drop(columns=["Student_ID"])
 
 # pisahkan feature dan target
-X = df.drop(columns=["Placement_Status", "Salary"])
-y_class = df["Placement_Status"]
-y_reg = df["Salary"]
+X = df.drop(columns=["placement_status", "salary_lpa"])
+y_class = df["placement_status"]
+y_reg = df["salary_lpa"]
 
 # split data
 X_train, X_test, y_train_class, y_test_class = train_test_split(
